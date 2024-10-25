@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - Kannur Book Club</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #c62828;
+            --accent-color: #ffd700;
+            --text-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --dark-bg: #121212;
+            --success-color: #2e7d32;
+            --border-color: #e0e0e0;
+        }
+
+          /* Header Styles */
+          .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+        display: flex;
+        align-items: center;
+    }
+        .navbar.scrolled {
+            background-color: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand img {
+            height: 45px;
+            margin-right: 10px;
+        }
+        
+
+        .search-form {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-form input {
+        border-radius: 25px;
+        padding: 0.75rem 2.5rem 0.75rem 1.5rem;
+        border: none;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+        .search-form input:focus {
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+
+        .search-form button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: var(--primary-color);
+        }
+
+        .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 991px) {
+        .navbar-collapse {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 0 0 10px 10px;
+            margin: 0 -1rem;
+        }
+
+        .nav-buttons {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .nav-buttons .btn {
+            width: 100%;
+            text-align: left;
+        }
+
+        .search-form {
+            margin: 1rem 0;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .nav-buttons {
+            margin-left: 1rem;
+        }
+    }
+
+    /* Optional: Hide button text on very small screens */
+    @media (max-width: 575px) {
+        .nav-buttons .btn i {
+            margin-right: 0.5rem;
+        }
+    }
+
+     /* Newsletter Section */
+     .newsletter-section {
+            background-color: var(--light-bg);
+            padding: 5rem 0;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/1920/1080') center/cover;
+            opacity: 0.05;
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            border-radius: 25px 0 0 25px;
+            border: none;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .newsletter-form button {
+            border-radius: 0 25px 25px 0;
+            border: none;
+            background-color: var(--secondary-color);
+            padding: 1rem 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 6rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Include provided header and footer styles here */
+        
+        .success-container {
+            padding: 120px 20px 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .success-header {
+            background: var(--success-color);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .success-icon i {
+            color: var(--success-color);
+            font-size: 40px;
+        }
+
+        .order-details {
+            padding: 2rem;
+        }
+
+        .order-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover {
+            background: var(--light-bg);
+            transform: translateX(10px);
+        }
+
+        .book-cover {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .price-details {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Tracking and Button Container Styles */
+.delivery-info {
+    background: #e8f5e9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/* Progress Tracking Styles */
+.tracking-progress {
+    position: relative;
+    padding: 20px 0;
+    margin: 0 -10px;
+}
+
+.progress-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--border-color);
+    transform: translateY(-50%);
+    z-index: 1;
+    margin: 0 15px;
+}
+
+
+        .progress-line-active {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25%;
+            height: 100%;
+            background: var(--success-color);
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-step {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border: 2px solid var(--success-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+/* Status Text Container */
+.status-text-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    padding: 0 5px;
+}
+
+.status-text {
+    font-size: 0.75rem;
+    text-align: center;
+    width: 70px; /* Fixed width for consistency */
+    word-wrap: break-word;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+        .btn-track {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-track:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+      /* Invoice Button Base Styles */
+.invoice-button {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    width: auto; /* Changed from potential 100% width */
+    min-width: 200px; /* Ensures minimum clickable area */
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+.invoice-button:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 35, 126, 0.2);
+}
+
+.invoice-button .download-icon {
+    transition: all 0.3s ease;
+}
+
+/* Order Actions Container */
+.order-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Aligns buttons to the start on larger screens */
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 1200px) {
+    /* Large screens / Laptops */
+    .invoice-button {
+        width: auto;
+        max-width: none;
+        padding: 0.75rem 2.5rem;
+    }
+    
+    .order-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    /* Medium laptops */
+    .invoice-button {
+        width: auto;
+        padding: 0.75rem 2rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Small laptops / tablets */
+    .invoice-button {
+        width: auto;
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Mobile devices */
+    .order-actions {
+        flex-direction: column;
+    }
+    
+    .invoice-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Animation for download icon */
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
+
+.invoice-button:hover .download-icon {
+    animation: bounceDown 1s infinite;
+}
+    </style>
+</head>
+<body>
+
+     <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/api/placeholder/45/45" alt="Logo"> Kannur Book Club
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="search-form mx-lg-auto my-2 my-lg-0">
+                <input type="search" class="form-control" placeholder="Search books, authors, ISBN...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="nav-buttons mt-3 mt-lg-0">
+                <a href="#" class="btn btn-outline-light me-2 mb-2 mb-lg-0"><i class="fas fa-heart"></i> <span class="d-none d-sm-inline">Wishlist</span></a>
+                <a href="#" class="btn btn-outline-light me-2 mb-2 mb-lg-0"><i class="fas fa-shopping-cart"></i> <span class="d-none d-sm-inline">Cart</span></a>
+                <a href="/kannur book/registerandlogin.html" class="btn btn-light mb-2 mb-lg-0"><i class="fas fa-user"></i> <span class="d-none d-sm-inline">Login</span></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Include provided header here -->
+
+<main class="success-container">
+    <div class="container">
+        <div class="success-card animate__animated animate__fadeIn">
+            <div class="success-header">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h1 class="mb-2">Order Confirmed!</h1>
+                <p class="mb-0">Order #KBC238756 has been successfully placed</p>
+            </div>
+
+            <div class="order-details">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="mb-4">Order Summary</h3>
+                        
+                        <div class="order-item d-flex gap-3">
+                            <img src="9780743200400.jpg" alt="Book 1" class="book-cover">
+                            <div class="flex-grow-1">
+                                <h5>Randamoozham</h5>
+                                <p class="text-muted mb-2">M.T. Vasudevan Nair</p>
+                                <div class="d-flex justify-content-between">
+                                    <span>Quantity: 1</span>
+                                    <span class="fw-bold">₹499</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-item d-flex gap-3">
+                            <img src="9780743200400.jpg" alt="Book 2" class="book-cover">
+                            <div class="flex-grow-1">
+                                <h5>Aarachaar</h5>
+                                <p class="text-muted mb-2">K.R. Meera</p>
+                                <div class="d-flex justify-content-between">
+                                    <span>Quantity: 2</span>
+                                    <span class="fw-bold">₹898</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="price-details">
+                            <h4 class="mb-3">Price Details</h4>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Subtotal</span>
+                                <span>₹1,397</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 text-success">
+                                <span>Discount (NEWUSER10)</span>
+                                <span>-₹140</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Shipping</span>
+                                <span>₹50</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Grand Total</span>
+                                <span>₹1,307</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="delivery-info">
+                            <h4 class="mb-3">Delivery Information</h4>
+                            <p class="mb-2"><strong>Expected Delivery:</strong></p>
+                            <p class="text-success mb-4">October 28 - October 30</p>
+                            
+                            <p class="mb-2"><strong>Shipping Address:</strong></p>
+                            <p class="mb-4">
+                                John Doe<br>
+                                123, Green Valley Apartments<br>
+                                Near Town Square<br>
+                                Kannur, Kerala - 670001<br>
+                                Phone: +91 9876543210
+                            </p>
+
+                            <div class="tracking-progress mb-4">
+                                <div class="progress-line">
+                                    <div class="progress-line-active"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="progress-step">1</div>
+                                    <div class="progress-step">2</div>
+                                    <div class="progress-step">3</div>
+                                    <div class="progress-step">4</div>
+                                </div>
+                                <div class="status-text-container">
+                                    <div class="status-text">Order Placed</div>
+                                    <div class="status-text">Order Confirmed</div>
+                                    <div class="status-text">Order Shipped</div>
+                                    <div class="status-text">Order Delivered</div>
+                                </div>
+                            </div>
+                            
+                            <div class="button-container">
+                                <button class="btn-track">
+                                    <i class="fas fa-truck"></i>Track Order
+                                </button>
+                                <button class="invoice-button" onclick="downloadInvoice()">
+                                    <i class="fas fa-file-invoice"></i>Download Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Include provided footer here -->
+  <!-- Newsletter -->
+  <section class="newsletter-section">
+    <div class="container text-center">
+        <h2 class="mb-4">Join Our Newsletter</h2>
+        <p class="lead mb-4">Get notified about new releases, author events, and exclusive offers!</p>
+        <form class="newsletter-form d-flex justify-content-center">
+            <input type="email" class="form-control" placeholder="Enter your email address">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-3">About Us</h5>
+                <p>Kannur Book Club is your premier destination for Malayalam literature. We offer a curated selection of books across various genres, from classic literature to contemporary works.</p>
+                <div class="social-links mt-4">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="mb-3">Quick Links</h5>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Shop</a>
+                    <a href="#">Categories</a>
+                    <a href="#">Authors</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Events</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="mb-3">Customer Service</h5>
+                <div class="footer-links">
+                    <a href="#">My Account</a>
+                    <a href="#">Track Order</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">FAQs</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="mb-3">Contact Us</h5>
+                <p><i class="fas fa-map-marker-alt me-2"></i> Town Square, Kannur, Kerala</p>
+                <p><i class="fas fa-phone me-2"></i> +91 9895983313</p>
+                <p><i class="fas fa-envelope me-2"></i> sisiram.babu@gmail.com</p>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-outline-light me-2"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="#" class="btn btn-outline-light"><i class="fab fa-telegram"></i> Telegram</a>
+                </div>
+            </div>
+        </div>
+        <hr class="mt-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-md-0">© 2024 Kannur Book Club. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <img src="/api/placeholder/300/50" alt="Payment Methods" class="img-fluid" style="max-width: 300px;">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Animate progress line
+    setTimeout(() => {
+        document.querySelector('.progress-line-active').style.width = '50%';
+    }, 1000);
+
+    // Add scroll effect to navbar
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            document.querySelector('.navbar').classList.add('scrolled');
+        } else {
+            document.querySelector('.navbar').classList.remove('scrolled');
+        }
+    });
+
+
+
+      // Add invoice download functionality
+      function downloadInvoice() {
+            // Add a loading state to the button
+            const button = document.querySelector('.invoice-button');
+            const originalContent = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            button.disabled = true;
+
+            // Simulate download delay (replace with actual invoice generation)
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.disabled = false;
+                
+                // Show success message
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: var(--success-color);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                toast.innerHTML = '<i class="fas fa-check-circle me-2"></i> Invoice downloaded successfully!';
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }, 1500);
+        }
+
+        // Add animations for toast messages
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+</script>
+</body>
+</html>
