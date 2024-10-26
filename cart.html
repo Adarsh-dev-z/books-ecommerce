@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Cart</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+   <style>
+    :root {
+        --primary-color: #1a237e;
+        --secondary-color: #e74c3c;
+        --accent-color: #f1c40f;
+        --text-color: #34495e;
+        --light-bg: #ecf0f1;
+        --dark-bg: #2c3e50;
+        --success-color: #27ae60;
+        --border-radius: 8px;
+        --shadow: 0 2px 4px rgba(0,0,0,0.1);
+        --transition: all 0.3s ease;
+    }
+    
+    /* Base Styles */
+    body {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-color);
+        background-color: var(--light-bg);
+        padding-top: clamp(4rem, 5vw, 5rem);
+        min-height: 100vh;
+    }
+    
+    /* Navbar Styles */
+    .navbar {
+        background-color: var(--primary-color);
+        padding: clamp(0.5rem, 1vw, 1rem) 0;
+        transition: var(--transition);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    .navbar.scrolled {
+        background-color: rgba(26, 35, 126, 0.95);
+        backdrop-filter: blur(10px);
+    }
+    
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+    }
+    
+    .navbar-brand img {
+        height: clamp(35px, 5vw, 45px);
+        margin-right: clamp(5px, 1vw, 10px);
+        transition: var(--transition);
+    }
+    
+    /* Search Form */
+    .search-form {
+        position: relative;
+        max-width: min(500px, 90%);
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .search-form input {
+        width: 100%;
+        border-radius: 25px;
+        padding: 0.75rem 2.5rem 0.75rem 1.5rem;
+        border: none;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        transition: var(--transition);
+    }
+    
+    .search-form button {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: none;
+        color: var(--primary-color);
+        cursor: pointer;
+    }
+    
+    /* Cart Container */
+    .cart-container {
+        width: min(1200px, 95%);
+        margin: clamp(1rem, 3vw, 2rem) auto;
+        padding: 0 clamp(0.5rem, 1vw, 1rem);
+    }
+    
+    /* Cart Header */
+    .cart-header {
+        background-color: white;
+        padding: clamp(0.75rem, 2vw, 1rem);
+        border-radius: var(--border-radius);
+        margin-bottom: clamp(0.75rem, 2vw, 1rem);
+        box-shadow: var(--shadow);
+    }
+    
+    .cart-header h2 {
+        margin: 0;
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+    }
+    
+    /* Cart Item */
+    .cart-item {
+        background-color: white;
+        padding: clamp(1rem, 2.5vw, 1.25rem);
+        border-radius: var(--border-radius);
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .book-image {
+        width: 100%;
+        max-width: clamp(80px, 15vw, 120px);
+        height: auto;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        border-radius: calc(var(--border-radius) / 2);
+    }
+    
+    .book-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        line-height: 1.3;
+    }
+    
+    /* Book Details */
+    .book-details {
+        font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+        margin-bottom: 0.5rem;
+    }
+    
+    .book-details p {
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: clamp(0.5rem, 2vw, 1rem);
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+    
+    .remove-btn,
+    .save-for-later {
+        white-space: nowrap;
+        font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+        color: var(--text-color);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+    
+    /* Quantity Control */
+    .quantity-control {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: clamp(0.5rem, 2vw, 1rem) 0;
+    }
+    
+    .quantity-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        width: clamp(28px, 4vw, 30px);
+        height: clamp(28px, 4vw, 30px);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .quantity-btn:hover {
+        background-color: #2a3f9e;
+    }
+    
+    /* Price Display */
+    .price-display {
+        font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+    
+    /* Stock Warning */
+    .stock-warning {
+        color: var(--secondary-color);
+        font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+        font-weight: 500;
+        margin: 0.5rem 0;
+    }
+    
+    /* Cart Summary */
+    .cart-summary {
+    background-color: white;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+    
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+    }
+    
+    /* Shipping Options */
+    .shipping-option {
+        padding: clamp(0.75rem, 2vw, 1rem);
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .shipping-option.selected {
+        border-color: var(--primary-color);
+        background-color: #f8f9fa;
+    }
+    
+    /* Checkout Button */
+    .checkout-btn {
+        background-color: var(--success-color);
+        color: white;
+        border: none;
+        padding: clamp(0.75rem, 2vw, 1rem);
+        border-radius: var(--border-radius);
+        width: 100%;
+        font-weight: 600;
+        font-size: clamp(0.9rem, 1.5vw, 1rem);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+    
+    .checkout-btn:hover {
+        background-color: #219a52;
+    }
+    
+    /* Recommended Items */
+    .recommended-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: clamp(0.5rem, 1.5vw, 0.75rem) 0;
+    }
+    
+    .recommended-item img {
+        width: clamp(50px, 15vw, 60px);
+        height: auto;
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        border-radius: calc(var(--border-radius) / 2);
+    }
+    
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .navbar-nav {
+            padding: 1rem 0;
+        }
+    
+        .search-form {
+            margin: 0.75rem auto;
+        }
+    
+        .cart-item .row {
+            flex-direction: column;
+        }
+    
+        .cart-item .col-md-2,
+        .cart-item .col-md-6 {
+            width: 100%;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    
+        .book-details,
+        .action-buttons {
+            align-items: center;
+        }
+    
+        .quantity-control {
+            justify-content: center;
+        }
+    
+        .cart-summary {
+            position: static;
+            margin-top: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .navbar-brand span {
+            display: none;
+        }
+    
+        .search-form input {
+            font-size: 0.9rem;
+        }
+    
+        .cart-header {
+            text-align: center;
+        }
+    
+        .book-details p {
+            margin-bottom: 0.25rem;
+        }
+    
+        .action-buttons {
+            justify-content: center;
+        }
+    
+        .shipping-option h5 {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+    }
+    
+    /* Accessibility Improvements */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            transition: none !important;
+        }
+    }
+    
+    @media (prefers-contrast: more) {
+        .cart-item,
+        .cart-summary,
+        .shipping-option {
+            border: 2px solid var(--dark-bg);
+        }
+    
+        .quantity-btn,
+        .checkout-btn {
+            border: 2px solid transparent;
+        }
+    }
+    
+    /* Print Styles */
+    @media print {
+        .navbar,
+        .action-buttons,
+        .checkout-btn {
+            display: none;
+        }
+    
+        body {
+            padding: 0;
+            background: white;
+        }
+    
+        .cart-item,
+        .cart-summary {
+            break-inside: avoid;
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Navbar (Kept as is) -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/api/placeholder/45/45" alt="Logo"> Kannur Book Club
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="search-form mx-auto">
+                    <input type="search" class="form-control" placeholder="Search books, authors, ISBN...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="ms-auto">
+                    <a href="/wishlist.html" class="btn btn-outline-light me-2"><i class="fas fa-heart"></i> Wishlist</a>
+                    <a href="/cart.html" class="btn btn-outline-light me-2"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href="/login.html" class="btn btn-light"><i class="fas fa-user"></i> Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cart-container">
+        <div class="row g-4">
+            <!-- Main Cart Column -->
+            <div class="col-lg-8">
+                <div class="cart-header">
+                    <h2 class="mb-0">Shopping Cart (2 items)</h2>
+                </div>
+
+                <!-- Cart Item 1 -->
+                <div class="cart-item">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-3 col-md-2">
+                            <img src="/9780465013272-1.webp" alt="Book cover" class="book-image">
+                        </div>
+                        <div class="col-12 col-sm-9 col-md-6">
+                            <h3 class="book-title">The Great Gatsby</h3>
+                            <div class="book-details">
+                                <p class="mb-1">Author: F. Scott Fitzgerald</p>
+                                <p class="mb-1">Format: Hardcover</p>
+                                <p class="mb-2">Seller: Premium Books</p>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="#" class="remove-btn"><i class="fas fa-trash"></i> Remove</a>
+                                <a href="#" class="save-for-later"><i class="far fa-bookmark"></i> Save for later</a>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-2">
+                            <div class="quantity-control">
+                                <button class="quantity-btn">-</button>
+                                <span>1</span>
+                                <button class="quantity-btn">+</button>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-2">
+                            <div class="price-display">$24.99</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Item 2 -->
+                <div class="cart-item">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-3 col-md-2">
+                            <img src="/9780465013272-1.webp" alt="Book cover" class="book-image">
+                        </div>
+                        <div class="col-12 col-sm-9 col-md-6">
+                            <h3 class="book-title">1984</h3>
+                            <div class="book-details">
+                                <p class="mb-1">Author: George Orwell</p>
+                                <p class="mb-1">Format: Paperback</p>
+                                <p class="mb-2">Seller: BookMart</p>
+                            </div>
+                            <p class="stock-warning"><i class="fas fa-exclamation-circle"></i> Only 2 left in stock</p>
+                            <div class="action-buttons">
+                                <a href="#" class="remove-btn"><i class="fas fa-trash"></i> Remove</a>
+                                <a href="#" class="save-for-later"><i class="far fa-bookmark"></i> Save for later</a>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-2">
+                            <div class="quantity-control">
+                                <button class="quantity-btn">-</button>
+                                <span>1</span>
+                                <button class="quantity-btn">+</button>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-2">
+                            <div class="price-display">$19.99</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Options -->
+                <div class="cart-item">
+                    <h3 class="mb-3">Shipping Options</h3>
+                    <div class="shipping-option selected">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping" id="free-shipping" checked>
+                            <label class="form-check-label" for="free-shipping">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">Free Shipping</h5>
+                                        <p class="mb-0 text-muted">Delivery by Wed, Oct 30</p>
+                                    </div>
+                                    <span class="text-success">FREE</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="shipping-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping" id="express-shipping">
+                            <label class="form-check-label" for="express-shipping">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">Express Shipping</h5>
+                                        <p class="mb-0 text-muted">Delivery by Mon, Oct 28</p>
+                                    </div>
+                                    <span>$9.99</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart Summary Column -->
+            <div class="col-lg-4">
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h3 class="mb-4">Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal (2 items)</span>
+                        <span>$44.98</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span class="text-success">FREE</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Estimated Tax</span>
+                        <span>$3.60</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Total</strong>
+                        <strong>$48.58</strong>
+                    </div>
+
+                    <div class="promo-code">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Enter promo code">
+                            <button class="btn btn-outline-primary" type="button">Apply</button>
+                        </div>
+                    </div>
+
+                    <a href="/checkout.html">
+                        <button class="checkout-btn mt-3">
+                            Continue to Checkout
+                        </button>
+                    </a>
+                    
+
+                    <div class="mt-3 text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-lock me-1"></i> Secure checkout
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Recommended Items -->
+                <div class="cart-summary mt-3">
+                    <h4 class="mb-3">You might also like</h4>
+                    <div class="recommended-item d-flex align-items-center mb-3">
+                        <img src="/9780465013272-1.webp" alt="Book cover" class="me-3" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;">
+                        <div>
+                            <h6 class="mb-1">Animal Farm</h6>
+                            <p class="mb-1 text-muted">George Orwell</p>
+                            <strong>$15.99</strong>
+                        </div>
+                    </div>
+                    <div class="recommended-item d-flex align-items-center">
+                        <img src="/9780465013272-1.webp" alt="Book cover" class="me-3" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;">
+                        <div>
+                            <h6 class="mb-1">To Kill a Mockingbird</h6>
+                            <p class="mb-1 text-muted">Harper Lee</p>
+                            <strong>$17.99</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Quantity control
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const span = this.parentElement.querySelector('span');
+                let quantity = parseInt(span.textContent);
+                
+                if (this.textContent === '+' && quantity < 10) {
+                    span.textContent = quantity + 1;
+                } else if (this.textContent === '-' && quantity > 1) {
+                    span.textContent = quantity - 1;
+                }
+                
+                // Update totals (you would need to implement this based on your needs)
+                updateTotals();
+            });
+        });
+
+        // Shipping option selection
+        document.querySelectorAll('.shipping-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.shipping-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // Update totals when shipping option changes
+                updateTotals();
+            });
+        });
+
+        // Remove item functionality
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                if(confirm('Are you sure you want to remove this item?')) {
+                    this.closest('.cart-item').remove();
+                    // Update cart count and totals
+                    updateCartCount();
+                    updateTotals();
+                }
+            });
+        });
+
+        // Save for later functionality
+        document.querySelectorAll('.save-for-later').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Implement save for later functionality
+                alert('Item saved for later');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+
+        // Helper functions
+        function updateTotals() {
+            // Implement total calculation logic here
+            console.log('Totals updated');
+        }
+
+        function updateCartCount() {
+            // Implement cart count update logic here
+            console.log('Cart count updated');
+        }
+
+        // Promo code functionality
+        document.querySelector('.promo-code button').addEventListener('click', function() {
+            const promoInput = document.querySelector('.promo-code input');
+            if (promoInput.value.trim() !== '') {
+                // Implement promo code validation and application
+                alert('Promo code applied');
+                promoInput.value = '';
+            }
+        });
+
+        // Checkout button
+        document.querySelector('.checkout-btn').addEventListener('click', function() {
+            // Implement checkout logic
+            alert('Proceeding to checkout');
+        });
+    </script>
+</body>
+</html>

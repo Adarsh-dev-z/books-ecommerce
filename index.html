@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Checkout - Kannur Book Club</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>Kannur Book Club - Modern Bookstore</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1a237e;
@@ -14,22 +14,11 @@
             --text-color: #2c3e50;
             --light-bg: #f8f9fa;
             --dark-bg: #121212;
-            --success-color: #2e7d32;
-            --border-color: #e0e0e0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-color);
-            line-height: 1.6;
-            padding-top: 76px; /* Added to account for fixed header */
         }
 
         /* Header Styles */
@@ -38,11 +27,7 @@
             padding: 1rem 0;
             transition: all 0.3s ease;
         }
-        
-        .navbar-brand {
-        display: flex;
-        align-items: center;
-    }
+
         .navbar.scrolled {
             background-color: rgba(26, 35, 126, 0.95);
             backdrop-filter: blur(10px);
@@ -60,13 +45,12 @@
         }
 
         .search-form input {
-        border-radius: 25px;
-        padding: 0.75rem 2.5rem 0.75rem 1.5rem;
-        border: none;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        width: 100%;
-    }
+            border-radius: 25px;
+            padding: 0.75rem 2.5rem 0.75rem 1.5rem;
+            border: none;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
 
         .search-form input:focus {
             box-shadow: 0 2px 20px rgba(0,0,0,0.2);
@@ -82,274 +66,485 @@
             color: var(--primary-color);
         }
 
-        .nav-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
-
-    @media (max-width: 991px) {
-        .navbar-collapse {
-            background-color: var(--primary-color);
-            padding: 1rem;
-            border-radius: 0 0 10px 10px;
-            margin: 0 -1rem;
-        }
-
-        .nav-buttons {
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .nav-buttons .btn {
-            width: 100%;
-            text-align: left;
-        }
-
-        .search-form {
-            margin: 1rem 0;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .nav-buttons {
-            margin-left: 1rem;
-        }
-    }
-
-    /* Optional: Hide button text on very small screens */
-    @media (max-width: 575px) {
-        .nav-buttons .btn i {
-            margin-right: 0.5rem;
-        }
-    }
-
-        /* Checkout Styles */
-        .checkout-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 2rem;
-        }
-
-        .checkout-form, .order-summary {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
-
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #303f9f 100%);
+            color: white;
+            padding: 6rem 0;
+            margin-bottom: 3rem;
             position: relative;
+            overflow: hidden;
         }
 
-        .progress-step {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 1;
-            background: white;
-            padding: 0 0.5rem;
-        }
-
-        .progress-bar::before {
+        .hero-section::before {
             content: '';
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: var(--border-color);
-            z-index: 0;
+            bottom: 0;
+            background: url('/api/placeholder/1920/1080') center/cover;
+            opacity: 0.1;
         }
 
-        .step-number {
-            width: 24px;
-            height: 24px;
+        .hero-book {
+            transform: perspective(1000px) rotateY(-15deg);
+            transition: transform 0.5s ease;
+            max-width: 350px;
+            box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero-book:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* Carousel specific styles */
+        .carousel-inner {
+            padding: 2rem 0;
+        }
+
+        .carousel-indicators {
+            bottom: -3rem;
+        }
+
+        .carousel-indicators [data-bs-target] {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            margin: 0 5px;
+        }
+
+        .carousel-indicators .active {
+            background-color: white;
+        }
+
+        .carousel-item {
+            transition: transform .6s ease-in-out;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-section:hover .carousel-control-prev,
+        .hero-section:hover .carousel-control-next {
+            opacity: 0.8;
+        }
+
+        .carousel-fade .carousel-item {
+            opacity: 0;
+            transition-duration: .6s;
+            transition-property: opacity;
+        }
+
+        .carousel-fade .carousel-item.active {
+            opacity: 1;
+        }
+
+        .book-card {
+    border: none;
+    border-radius: 20px;
+    background: white;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.book-card img {
+    height: 380px;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+    transition: transform 0.5s ease;
+}
+
+.book-card:hover img {
+    transform: scale(1.05);
+}
+
+.book-card .card-body {
+    padding: 1.8rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.book-card .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a237e;
+}
+
+.book-card .text-muted {
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.book-price {
+    color: #c62828;
+    font-weight: 700;
+    font-size: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(198, 40, 40, 0.95);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.2);
+}
+
+.book-card .btn-primary {
+    background: #1a237e;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.book-card .btn-primary:hover {
+    background: #283593;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.section-header::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1a237e, #c62828);
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+        /* Categories Section */
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-card img {
+            transition: transform 0.5s ease;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+        }
+
+        /* Authors Section */
+        .author-card {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 25px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.author-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1a237e, #c62828);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.author-card:hover::before {
+    opacity: 1;
+}
+
+.author-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.author-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 4px solid white;
+}
+
+.author-card:hover .author-image {
+    transform: scale(1.08);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.author-card h5 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a237e;
+}
+
+.author-card .text-muted {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    background: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+        .deal-section {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            padding: 4rem 0;
+            margin: 3rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deal-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1920/1080') center/cover;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .deal-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .deal-timer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .countdown {
             display: flex;
-            align-items: center;
+            gap: 1.5rem;
             justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a237e;
+            padding: 1.5rem;
+            border-radius: 15px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .countdown-item h4 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Enhanced Categories Section */
+        .category-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 2rem;
+            color: white;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
             font-size: 0.9rem;
         }
 
-        .checkout-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+        /* New Features */
+        .features-section {
+            padding: 4rem 0;
+            background: white;
         }
 
-        .section-title {
+        .feature-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: #1a237e;
+            color: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
             margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .checkout-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        .checkout-input, .checkout-select {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .checkout-input:focus, .checkout-select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26,35,126,0.1);
-        }
-
-        .payment-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .payment-option {
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .payment-option:hover {
-            border-color: var(--primary-color);
-        }
-
-        .payment-option.selected {
-    background: rgba(26,35,126,0.05);
-}
-
-        .payment-option img {
-            width: 48px;
-            height: 48px;
+        /* Book Preview Modal */
+        .preview-image {
+            max-height: 400px;
             object-fit: contain;
         }
 
-        .terms-container {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: var(--light-bg);
-            border-radius: 8px;
-        }
-
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            width: auto;
-            margin-right: 0.5rem;
-        }
-
-        .checkout-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .checkout-btn:hover {
-            background-color: #283593;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(26,35,126,0.2);
-        }
-
-        .order-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .order-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-right: 1rem;
-        }
-
-        .item-details {
-            flex-grow: 1;
-        }
-
-        .item-price {
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
-
-        .order-total {
+        /* Reading Progress Section */
+        .reading-progress {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin-top: 2rem;
-            padding: 1.5rem;
-            border-radius: 8px;
-            background: var(--light-bg);
         }
 
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
+        .progress-bar {
+            height: 10px;
+            border-radius: 5px;
         }
 
-        .total-row.final {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--border-color);
+        /* Reading List Feature */
+        .reading-list {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
         }
 
-        .secure-badge {
+        .book-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--success-color);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            padding: 0.5rem;
-            background: rgba(46,125,50,0.1);
-            border-radius: 6px;
-            width: fit-content;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .book-item:hover {
+            transform: translateX(10px);
+        }
+
+       /* New Release Section */
+       .new-release-section {
+            background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+            padding: 4rem 0;
+            color: white;
+            margin: 3rem 0;
+        }
+
+        .new-release-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
         }
 
         /* Newsletter Section */
@@ -390,9 +585,8 @@
             background-color: var(--secondary-color);
             padding: 1rem 2rem;
         }
-
-        /* Footer */
-        .footer {
+          /* Enhanced Footer */
+          .footer {
             background-color: var(--dark-bg);
             color: white;
             padding: 6rem 0 2rem;
@@ -409,338 +603,431 @@
             height: 4px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
-
-        @media (max-width: 768px) {
-            .checkout-container {
-                grid-template-columns: 1fr;
-            }
-            .payment-options {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .saved-addresses {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.address-grid {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.address-card {
-    position: relative;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.address-card:hover {
-    border-color: var(--primary-color);
-    background: rgba(26,35,126,0.02);
-}
-
-.address-radio {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    margin: 0;
-}
-
-.address-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.address-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    padding: 0.25rem 0.75rem;
-    background: rgba(26,35,126,0.1);
-    border-radius: 12px;
-}
-
-.address-default {
-    font-size: 0.75rem;
-    color: var(--success-color);
-    padding: 0.25rem 0.5rem;
-    background: rgba(46,125,50,0.1);
-    border-radius: 12px;
-}
-
-.address-details {
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.address-details p {
-    margin: 0.5rem 0 0 0;
-    color: #666;
-}
-
-.add-address-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background: none;
-    border: 2px dashed var(--border-color);
-    border-radius: 8px;
-    color: var(--primary-color);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.add-address-btn:hover {
-    border-color: var(--primary-color);
-    background: rgba(26,35,126,0.02);
-}
-
-/* Responsive adjustments */
-@media (min-width: 768px) {
-    .address-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-        
     </style>
 </head>
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="/api/placeholder/45/45" alt="Logo"> Kannur Book Club
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <form class="search-form mx-lg-auto my-2 my-lg-0">
-                <input type="search" class="form-control" placeholder="Search books, authors, ISBN...">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-            <div class="nav-buttons mt-3 mt-lg-0">
-                <a href="#" class="btn btn-outline-light me-2 mb-2 mb-lg-0"><i class="fas fa-heart"></i> <span class="d-none d-sm-inline">Wishlist</span></a>
-                <a href="#" class="btn btn-outline-light me-2 mb-2 mb-lg-0"><i class="fas fa-shopping-cart"></i> <span class="d-none d-sm-inline">Cart</span></a>
-                <a href="/kannur book/registerandlogin.html" class="btn btn-light mb-2 mb-lg-0"><i class="fas fa-user"></i> <span class="d-none d-sm-inline">Login</span></a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-    <!-- Checkout Section -->
-    <div class="checkout-container">
-        <div class="checkout-form">
-            <!-- <div class="progress-bar">
-                <div class="progress-step">
-                    <div class="step-number">1</div>
-                    <span>Contact</span>
-                </div>
-                <div class="progress-step">
-                    <div class="step-number">2</div>
-                    <span>Shipping</span>
-                </div>
-                <div class="progress-step">
-                    <div class="step-number">3</div>
-                    <span>Payment</span>
-                </div>
-            </div> -->
-
-            <form>
-                <div class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
-                    </svg>
-                    <h2 class="checkout-title">Contact Information</h2>
-                </div>
-
-                <div class="form-group">
-                    <label class="checkout-label">Email Address</label>
-                    <input type="email" class="checkout-input" placeholder="name@example.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="checkout-label">Phone Number</label>
-                    <input type="tel" class="checkout-input" placeholder="+1 (555) 000-0000" required>
-                </div>
-
-                <div class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <h2 class="checkout-title">Shipping Address</h2>
-                </div>
-
-                <div class="saved-addresses mb-4">
-                    <div class="section-title">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <h2 class="checkout-title">Saved Addresses</h2>
-                    </div>
-                    
-                    <div class="address-grid">
-                        <label class="address-card">
-                            <input type="radio" name="selected_address" class="address-radio">
-                            <div class="address-content">
-                                <div class="address-header">
-                                    <span class="address-label">Home</span>
-                                    <span class="address-default">Default</span>
-                                </div>
-                                <div class="address-details">
-                                    <strong>John Doe</strong>
-                                    <p>123 Main Street, Apt 4B<br>
-                                    Kannur, Kerala 670001<br>
-                                    +91 9876543210</p>
-                                </div>
-                            </div>
-                        </label>
-                
-                        <label class="address-card">
-                            <input type="radio" name="selected_address" class="address-radio">
-                            <div class="address-content">
-                                <div class="address-header">
-                                    <span class="address-label">Office</span>
-                                </div>
-                                <div class="address-details">
-                                    <strong>John Doe</strong>
-                                    <p>456 Work Plaza, Floor 3<br>
-                                    Kannur, Kerala 670002<br>
-                                    +91 9876543211</p>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                
-                    <button class="add-address-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                        </svg>
-                        Add New Address
-                    </button>
-                </div>
-
-                <div class="form-group">
-                    <input type="text" class="checkout-input" placeholder="Full Name" required>
-                    <input type="text" class="checkout-input" placeholder="Address Line 1" required style="margin-top: 0.5rem;">
-                    <input type="text" class="checkout-input" placeholder="Address Line 2 (Optional)" style="margin-top: 0.5rem;">
-                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
-                        <input type="text" class="checkout-input" placeholder="City" required>
-                        <input type="text" class="checkout-input" placeholder="State" required>
-                        <input type="text" class="checkout-input" placeholder="ZIP" required>
-                    </div>
-                </div>
-
-                <div class="section-title">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
-                    </svg>
-                    <h2 class="checkout-title">Payment Method</h2>
-                </div>
-                
-                <div class="payment-options">
-                    <label class="payment-option">
-                        <input type="radio" name="payment_method" class="payment-radio" value="stripe" checked>
-                        <div class="payment-content">
-                            <img src="/pngwing.com (2).png" alt="Stripe">
-                            <span>Stripe</span>
-                        </div>
-                    </label>
-                    <label class="payment-option">
-                        <input type="radio" name="payment_method" class="payment-radio" value="razorpay">
-                        <div class="payment-content">
-                            <img src="/pngwing.com (2).png" alt="Razorpay">
-                            <span>Razorpay</span>
-                        </div>
-                    </label>
-                </div>
-
-                <!-- BUTTON COMMENTED -->
-
-                <!-- <button type="submit" class="checkout-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    Complete Purchase
-                </button> -->
-
-                <div class="secure-badge">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 1L2 3v5c0 4.19 2.85 7.4 6 8.6 3.15-1.2 6-4.41 6-8.6V3L8 1zm0 13.33C5.51 13.27 3.73 10.15 3.73 7V4.13L8 2.67l4.27 1.47V7c0 3.15-1.78 6.27-4.27 6.33z"/>
-                    </svg>
-                    Secure Checkout
-                </div>
-            </form>
-        </div>
-
-        <div class="order-summary">
-            <h2 class="checkout-title">Order Summary</h2>
-            <div class="order-item">
-                <img src="/9780465013272-1.webp" alt="Product">
-                <div class="item-details">
-                    <h3>Premium Product</h3>
-                    <p>Quantity: 1</p>
-                </div>
-                <div class="item-price">$99.99</div>
-            </div>
-            <div class="order-item">
-                <img src="/9780465013272-1.webp" alt="Product">
-                <div class="item-details">
-                    <h3>Premium Product 2</h3>
-                    <p>Quantity: 2</p>
-                </div>
-                <div class="item-price">$149.98</div>
-            </div>
-            <div class="order-total">
-                <div class="total-row">
-                    <span>Subtotal</span>
-                    <span>$249.97</span>
-                </div>
-                <div class="total-row">
-                    <span>Shipping</span>
-                    <span>$9.99</span>
-                </div>
-                <div class="total-row">
-                    <span>Tax</span>
-                    <span>$20.00</span>
-                </div>
-                <div class="total-row final">
-                    <span>Total</span>
-                    <span>$279.96</span>
-                </div>
-            </div>
-
-            <!-- Terms and Conditions moved here -->
-            <div class="terms-container">
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">I agree to the <a href="#" style="color: var(--primary-color);">Terms and Conditions</a> and <a href="#" style="color: var(--primary-color);">Privacy Policy</a></label>
-                </div>
-            </div>
-
-            <a href="/kannur book/ordersuces.html" type="submit" class="checkout-btn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-                Complete Purchase
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/api/placeholder/45/45" alt="Logo"> Kannur Book Club
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="search-form mx-auto">
+                    <input type="search" class="form-control" placeholder="Search books, authors, ISBN...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="ms-auto">
+                    <a href="/wishlist.html" class="btn btn-outline-light me-2"><i class="fas fa-heart"></i> Wishlist</a>
+                    <a href="cart.html" class="btn btn-outline-light me-2"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href="login.html" class="btn btn-light"><i class="fas fa-user"></i> Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <!-- First Slide -->
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h1 class="display-4 fw-bold mb-4">Discover the Magic of Malayalam Literature</h1>
+                                <p class="lead mb-4">Explore our vast collection of books across all genres. New members get 30% off on their first purchase!</p>
+                                <div class="d-flex gap-3">
+                                    <a href="/shop.html" class="btn btn-light btn-lg">Shop Now</a>
+                                    <a href="#" class="btn btn-outline-light btn-lg">Join Club</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSERUSEhMWFhUXGBsaFxcYFRsYFRUfGR0YFxgYFxUYHygjGhonHRUXITEhJSkrLi4wGh8zODMsNygtLisBCgoKDg0OGxAQGzAlHyU3LS4vLS0uLS0tLS0tKystLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAQMAwgMBEQACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAAAwIEBQYHAQj/xABDEAABAwEEBgUJBwMEAgMAAAABAAIRAwQSITEFBkFRYXETIoGRsRQyMzRykqGy0RYjUlNUwfAHQmKCouHxFZMlwuL/xAAbAQEAAgMBAQAAAAAAAAAAAAAAAQUCAwQGB//EADYRAAIBAgMFBgYCAgIDAQAAAAABAgMRBBIxBRMhQVEyM3GBkbEVIjRSU2EUQiOhwdEkYuEG/9oADAMBAAIRAxEAPwDtSAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIBCAQgEIBCAQgEIBCAQgEIBCAQgEIBCAQgEIBCAQgEIAgCAIAgCAIAgOTa+Wl7bfVDXvAhmAcQPMbsBVZiZNVHxPZbIpQlhItxT15LqzAeW1fzanvu+q0ZpdSy3NP7V6IeW1fzanvu+qZpdRuaf2r0Q8tq/m1Pfd9VOaXUjc0vtXoh5bV/Nqe+76qM0upO5pfavRDy2r+bU9931TNLqNzT+1eiHltX82p77vqmaXUjc0/tXoh5bV/Nqe+76qc0uo3NL7V6IeW1fzanvu+qjNLqTuaf2r0Q8tq/m1Pfd9UzPqNzT+1eiHltX82p77vqmaXUbmn9q9EPLav5tT33fVM0uo3NP7V6IeW1fzanvu+qZpdRuaf2r0Q8tq/m1Pfd9UzS6jc0/tXoh5bV/Nqe+76pml1I3NL7V6IeW1fzanvu+qZpdSdzT+1eiHltX82p77vqmaXUbmn9q9EeOttWPS1Pfd9UzS6hUaf2r0R3Kwn7qn7DfAK5joj59V7cvFk6kwCAIAgCAIDkOv/AK/V5M+Rqq8T3jPa7H+jj5+7NeWgsylz4OR7FKVzVOeV6ERHA/wLK9jS0nxswR7SENW6npGfnIZZV+w0xsd/MEZMZZeTPDBxgpoQ7Sd7M9j2v5uUi1+oA9r+SgSv1PAMP7kuYqK04nse0ouZOKtzPAB/klyEl0ZcWezNdM1LuG2TOMAYDDNSuPMxqXhxUW/Mmq2CneA6aQSATGABk3s+Sl2XM1xlOabcX6lVWzNDA4VATh1QMROeM7CsXFJam+nXnKeVwaXUtlgdR47JCVqd5sPoqfsN8ArqOiPnVXty8X7k6k1hAEAQBAEByHX/ANfq8mfI1VeJ7xntdj/Rx8/dmq2y1XAAMXuwaJif5Kwp08zu9Dfi8Tullj2noe2SnUA+8cHHgIA4Dgk3F6Iyw8Kse8lctNI2xza1Kk0gB/nGJOG7uK2U4JwlJ8jkxmJnHEU6MHa+pJQtLundTJkAAzGIkTB/m0dsSgt3mRlRrzWJlRk7oWTSQqVX0rpBZOMyDBj91E6OWKl1MqGPVavKjbQubbX6Om5/4QTz3Ba4RzSSOrE1tzSlU6EOjrd0tMVCLoJO2cjGayqU8ssq4mjCYzfUd7JWLpjw4SDI3ha2ranXCcZrNF3IfKganRjEgS7hOSz3by5maP5KdbdR8yx0lpGrTc1rWNN4w03uIAkbM1up0oSV7nBjMdXozUFFcdDImoWtlwxAkhsnLdOa0WTlZFk6koU801xXQw1j0pXrn7pjGgecSZznvXVOjTpr5mU1DH4rFy/xRSS1Mw5zmsJcRIk8AM/Bc1k5WRbylUp0nKbV1dmP0ZaH1KJq1H3Qb0QBAAwnHjK31IxjPKkV2DrVa1B1qk7alzZ7Z91ffhHZO7txC1zp/PaJ00cW9w6lTke2TpXG+4gNOTAMhsJO8pPIvlsZYf8AkTe8k+D5fou3ZLSWC1O82H0VP2G+AV1HRHzqr25eL9ydSawgCAIAgCA5Dr/6/V5M+Rqq8T3jPa7H+jj5+7NQ0tYjUaC0w9plpmN2E9nwUUaii7PRmW0MLKtFOHajxRXo62Co3ZeGDxuORwPJRVhlf6NmCxSrw49pamKtNZotTqhE9G260ficRAH+448V0Qi90l1KitWisc6j/rwS/ZkNF2YtDqlTz3mXcBsHYtNWSbUY6FjgqEqcZVqvafEstWGT0lU5vPaMSSPj4LZiXbLE49jQzSqVerLjWWrFAgZuIA+Y+CwwsbzudG2qmXDZVzdi3t7OjsTWHMho7Sbx/dZweas2c2JjudnRhzdv+z3V+tcJoOwcMRO2Y+oTExzfMhsmtu70J8HqT6DeHGrUA855x37gOAELHEKyUTo2W1UnUqdWRWh162sGd1uUZGC6eeSmKtRbNVeW82jGPQyOka1yk925pjmcB8VppRzSSLPG1VToTl+jD6s1LtJ0McTe2RBwAAxPNdOJjeSuyl2NUyUmlFttmS01UIoPwxIjvw8Foox/yIsto1GsLL9mP0awV2CnMMZEtbgSSZk9s/zLfVe7ebmytwMVi4Kne0Y6rqZm02YPYWHAEbNm4hcsZuMsxeVsPGpRdPkWOiqxZ9xUIvN83i3Zz2rbWipfPHQ4cBWlSf8AGq9paftGTdkuct1qd5sPoqfsN8ArqOiPnVXty8X7k6k1hAEAQBAEByHX/wBfq8mfI1VeJ7xntdj/AEcfP3ZqzLSDVdT2gA853LB0/kUjoWKTruk+SuY7R5HTWioIuDM8QJP7963VOxGPMrcJaOIrVV2US6CpdQ1C2HPMk/zmfiscRLjlXI3bKpJwdWS4yZd6Tfdo1CM7pjuha6SvNI7MdLJh5v8ARi9AWtopBjWkunENGXFzjA2eAXRiIXldsqtlYlRo5FFt/r/llelKfS2inS2NF9w5n/8APxUUnkpuRljouvi6dLkuJcaRF6oynOwujD2Qc+awpcIuRvxyz1YUl4lvrFZyGisyQ5uDo2tO/fjCzw07vKzTtjDtQVaGq4PwJNWGxQ5uOyN3escU/nNuxYv+Pd9WU2Bl61VXnYLo+A/+qmo7UkjXhIbzHVKj5cD3WF8tbSx65zwgRlM8SO5MMuLl0MtsVLxjSX9i+FRlJrGEicAAMzyA5FampTbZ3RnTw0I02+OlubLPWDFjW49Z2z+cVswy4tnHtdtwjBc2W1ms/QWqAOpUGG4Hd3j4hZylvaV+aOWjR/iY1RXZkjLWm0hjmNP95hc8IZk2W+IxKpSgnzLC2tvWqkGxeaCXcB/CcOK203ak76HBiVnx1NQ1WplnZLmLtanebD6Kn7DfAK6joj51V7cvF+5OpNYQBAEAQBAch1/9fq8mfI1VeJ7xntdj/Rx8/dmpWrRtOo4PcDeAiQSJG4xmM+8rGFWUVZG6vgaVaeeWvoXLNG36ZpsAAgDs/fALZRhOpLMuRjXp04Ut0uCZILI6m0C7AHd8FhUpVE7yRvoSpqKjF6FD2BwggEHYclqTa4o2zhGatJXQpsDRDQABsAgdyNt8WIQjBWirFLaAvl20gD/pS5vLl5GvcxVR1eYdZ23rxGOU8tnxUKby2TDo05T3nMrdRvgsi9IgiJnfgFGbLxvYzqxhKLjPRkzLE8AAU3RAiGmI2QsHWg3xkYRnSjHKmrClol7CYpOlxk4HFHiYS1ehrpOhTu4vXUt7dq++qQ4sqAtygb42EYnDYs6eMhDhdcTmxdChiZRblZoio6MFJxLg8vM4vmYO6cslm6+8XDT9G7C4SlB508z6tlVagHFpJPV+P8hIzyprqbauHjUlGT5HtagHFpObTI7cx/NwURm4poyq0I1HFvVFFtsbKrbrxIBkRgQeBUwqODujHE4aGIjlnyPbNZG0x1RnmSZJ5kpKblqTQw1Oj2UTOyWB0rU7zYfRU/Yb4BXUdEfOqvbl4v3J1JrCAIAgCAIDkOv/AK/V5M+Rqq8T3jPa7H+jj5+7NeWgszIaL/u7P3Vls/8AsV+N5F8rE4iCtZGu2Qd4/feuaphYT/TN8MRKBFY9El7iCYaMZG3hwKpsZGeH5XudE8YlG6XEv6LhTHUoBrzn0lVnV7Q5xO+Aq+VNzfzy4fpP/oqauLqz4P3JKlpFRrg8ULwbLb1VpBdxAm6yYxkngsFRySTi5Nc+HIxhXmr2dvMMquIAYaLZugubUF4DC9ADYvRMYrY6Kve0n+rehi6s5Kzf+xa7fcfVL61NjWs6k4QXZudiZiGxhtKRwjyx+Ru74mLqcXx8C1p6yUQQX2qkRtDWOxwMwZO2PiksDJpqNN+qMVXS1kizfrPQkkW3sFB0dhunLPjw2bo4Nuy3X+zB1v8A2/0R6W01Z65p9HUkiRi0tnKPOA2yssLhKtO+ZWLLCY6lT4SepaEZjdxldDhJaotKeLo1OEZILE6bhAEB47JQStTvNh9FT9hvgFdx0R86q9uXi/cnUmsIAgCAIAgOQ6/+v1eTPkaqvE94z2ux/o4+fuzXloLMv9F/3dn7qx2f/Yr8byL9WRwlFapdaTuBKGMnZXKbOZaEsmIu6Ibbo6lVjpGAkZHJw7d3BYSgmjGpTjPUsdEaONO8ajCMcJicCQQd4XC0Vq4Gy02xT6l0EebIw7ckRNrmga76UvWg0i3zRDzkHSA4ERsy7lkkapztwMP/AOPd0RfIABkADAjATM4RKEbt2uWroB37tw2yhi0VUnyYaMTiAP8AlDHUyugtJuZUNOMT1YOziN0YLGVhTUnK0VxNlD2mbwM7xhjx4Lkm4Ho8DDGpWlp+yJaC6QQHjslBK1O82H0VP2G+AV3HRHzqr25eL9ydSawgCAIAgCA5Dr/6/V5M+Rqq8T3jPa7H+jj5+7NeWgsyey2kMmSMchMTG7vVjgP7FbtCajluXtntIMgnHdt7lZFdGaZFb7QILJxIP0UGNWa7JVZqhBAwg984fBSTB24E9orBjS5xgAEnsUM2SkkrmZ05ZXODuiaCHS5pPmzE4kZY4LitdlHvLI0G2a1mm19GpTcytTdAh0tnIy7Ax2JlM41uBruj7DVtbnuDXudibwaSDwvZA7IJCmxrzJu8jZLDqzbHQajqQaBAa83h/t3c1OVk/wAiysYapomm1919dzg4TebSwHDrO4fBTkNG9Kjo+i10tLqgxII6s4mCQJMfzgsZU21wZspV4Rd5Rv5l9Z9JMBAFMicDAGGEyTtbxXNPCzfMu8PtfDw4buxkadZrpg5Z7OG3kVyzpyhqXdDF0q6+R3K1gdIQHjslBK1O82H0VP2G+AV3HRHzqr25eL9ydSawgCAIAgCA5Dr/AOv1eTPkaqvE94z2ux/o4+fuzXloLM13W9zgKV0E4umP9K7sFzPP7cv8ljFeX1i4dZxdAAxDTBEwThvOKsLlFvJXLq06TtLevUyynqHs6qm5nKrPVkzdYLRAhhIjPozHeAmZme/mXOiXV7RUbZ7rwHmHEgiG5uOI2AFG+BhKrJJ3OxWUClTa04wO/luC0WOSTu7mu2nV+zVK7q76LXOdvMt2DzcicMyNqlIZnoZRgEXYgboiOxZGJa6WrXKFRwaTAi6MSb3VwkH8W45bUBzW1iHGDLduBGzc4mTBO0ZIQWVSo3ENccDkcJxwBG9AUWmljN8icSRgNmzv7hvQEj65aQWkh5jEzjw5TGShpNcTKE5Qlmi7Mzui7U57YeIe3zhEcj2wqyvSyS/R7PZmO/k0+PaWv/ZerQWZ47JQStTvNh9FT9hvgFdx0R86q9uXi/cnUmsIAgCAIAgOQ6/+v1eTPkaqvE94z2ux/o4+fuzXloLMwms9qNMUyN58Au7AvUodtuyh5mCp1mVyb4IIEkyIAGE447u5WHA8/dS1LkWO7TJxkRdkti6O2D8IhDK3AtG6RDMMSJ2R9UuY57HUv6WaFdWBtj2w0y2lMy/HF8fhwAHaobuYVal1Y3212YrE0FnUoAbEBa1qUcfD+ZIDAaz6VbRDQ0/ezfY0gmYwMxiBF7HmgNJr1GPAc1tNpDsWtBBdOx22IG8DHJAR09HXxfa4NuxeLg0BodIaYjrguGUnbhvArr6GvNYGFt4iTiSXu3QAQMhsgFyAxFssrqQaHtBkxeJ5YTMYHbt3oDK6MrzVAMklhlxxvRdgzs/uwyGWxcuLXyFzsObWIt1TMyq49eeOyUErU7zYfRU/Yb4BXcdEfOqvbl4v3J1JrCAIAgCAIDkOv/r9Xkz5GqrxPeM9rsf6OPn7s15aCzNb11HUpe0fALtwWrKDbi+WHmavSpTn2LvSPOJE3kzbpdu5/VZWMrGQ1b0KbZaadACGkzUc0E3WjEzJw/COJWLMJux9EWKo2nTFNgDWMaGtaMgAIAHIAKDUQVrWSgIHOJzB/m+UAidqEmj63Ps9ZstLukAgOuvFNwky3EQXT47pQg0p7setykZnhjnxwQF5TtJui445+aSc8hdmRkBxmUB75eQWkl2E+dmC4zkYwzO3YgLKuRDrrmEEf3SXf6cPgcNyAvNBUPvXPmRdAGe2N+eDfiuTFy+VIvtg0m6sp9EZ1V56o8dkoJWp3mw+ip+w3wCu46I+dVe3LxfuTqTWEAQBAEAQHIdf/X6vJnyNVXie8Z7XY/0cfP3Zry0Fma9rkD0dMj8XaZC7cF2mUO3OxDxMdZdWq9QBxEDDPkFZZSjjh5y42Li2asVW0yRGEYYyYTKZSw8krnUdRdWvJLML4HTVOtUO78DJ3AHLeXLBnDN3ZnbUSxt4kADMnCNnioMTGaE0syvXrUGk36UXgRgQY6zTtxwIwIwQGdNOM0BBVzy/ZAaDrJq6GBz6cuEjF33hMzIiOq1oB3zI3YAazaLMA0h4h8iG3YJGN4nDCTAEb0BYOY5tQXhAGZjYZ47viEBd2i1McLoloyunP+2/DhkC2RMZoCSxUG9Mxgohz3AF3SdcUw5t8Nax0Nc4MLSXOBGMQIkgZWw2npGA3y8AkCYAbwa1oDWjg0AKsxLbnxPY7FjFYe8db8S4XOW547JQStTvNh9FT9hvgFdx0R86q9uXi/cnUmsIAgCAIAgOQ6/+v1eTPkaqvE94z2ux/o4+fuzXloLMroWRr3AuE3cRzO1d+A7TK3aEFJRuZSFaHBYyGjbGDD3b8By2la5S5FZjMVrTibPRx/dayrMZrZaaVCzOr1oc1pbdYTg97jdaDE4CXOywuyMUBzTQ+udOz2w1W2em2k5op1OiaWnAz0jQSbx4HEjsQHXhaA9ocxwc1wBaRiCCJBHCEBDVqRmhJbvYScDvy54oDm+nbAaVaC/pC0HY4NbJMNnEkwBgSePEQYqz0aldp80CmA0Xi6OrLgMJgQNiA9/8c+iWVH3KjC3BhkteCGm7IxaSHGZwwMzkgKNZrXT6QupCXOYy8ZMMc1vROAOTpawGRhLznCxbJLjVY/cf63fsq/E9s9fsT6bzZl1zFweOyUErU7zYfRU/Yb4BXcdEfOqvbl4v3J1JrCAIAgCAIDkOv/r9Xkz5GqrxPeM9rsf6OPn7s15aCzLmwnrRtMADeu3BTUZNM4ccnkT6Gbs1kI6zwQNgjEnkrKUjzWKxiy5YGY0fRlvXOO7kcJ4rWVRl6UIDVf6iaKr16TTSDajaQqONAtN6oXsNMlrgcHNY5xaIOIETkgOJUKZJiCSJkRjgCThwAKA7hqfaP/j7NOfQsHww/ZAZcidkoDVtPa60bOTTpjpKoOIa7qNP+T9p4CexCGzn1o0xVqOJJaLxJMNGMmczJw2GZ4qbGNyDpnQG3jnMScNkwok7ExuympVLs3ExhJJJO3bsmVrNpk9FaCfazdpghozd9FrlOxtjTubDV0KLHFEEnC8Z3mR+y4q0ryPVbIVqDX7I1pLY8dkoJWp3mw+ip+w3wCu46I+dVe3LxfuTqTWEAQBAEAQHIdf/AF+ryZ8jVV4nvGe12P8ARx8/dmvLQWZldXqINQuP9ow5nDwBXVhYXlfoUm26zhRUFz9jM17RdeOk82Nmw8VYnkzJUqocOr3/APaAuqNSBihBJW0gykx9Z0hrGOcYGJwOACA4BbdMX7RVrMYG3m1AGjZfY5g5nrIDreh7tmoUqLndanTa07pDRe+OCEo1rXnWuoIs9E3Q5vXeMCdl1p2ZYnisYTUtDZWozpWzK11c0ICFsOYlpVAEZNiKtWIBO04BatWbUrIuNG0xUcymP7nAfuSsZuyM4K7O66A0WyhSa1owjPfxlcy6nU+hq2uDptA9geLlz1e0ek2R3L8TBrUWp47JQStTvNh9FT9hvgFdx0R86q9uXi/cnUmsIAgCAIAgOQ6/+v1eTPkaqvE94z2ux/o4+fuzXloLM2HV1kUy7e7fjhAw+KsMIvkbPJ7dneuo9EXVSmCTJ7c+cBdZSF1o53VgHLA7xzCEF3VrHfz/AO0JLDWK/wCRWm5mKTjx2A4dqEHKNUNXzaXl83WU3snCbxmboxwyEnHMb0B0LTbxTAAEPdJzxaD4cO1cuJq5VlWpd7IwO+lvZ9laftmj6yWfzHjZgfEfv3rDBz4tHR/+gofLGovAwi7zzIWEmZwRY2ipLvBYoyZmdVqBNTpDSNRrBJAmJOAmNiwqPkbaS5s3Ww6XqNc11BzmMJg0y1xpzuE5HEbexammkbYyUnwLzWEuL2OcIJYDHa5cdTU9Psl/4n4mKWstTx2SglanebD6Kn7DfAK7joj51V7cvF+5OpNYQBAEAQBAch1/9fq8mfI1VeJ7xntdj/Rx8/dmvLQWZnNF2q7RAgHMnfn/AMKzwvdo8Zth/wDlS8ictNTFougZnfO6Ni6CrLhtW6bonsy49vagJS19QGRE8fplmgJqbHCnVAMl1N7QDjEtPfihBpOodTyWp0bwDSrWZlpaTm10MD2/E9zd5WMnZXNlGm6k1COrJLTXNR5e7NxnluHYIHYqiUnJ5me+oUY0YKEeRitPD7k8x4rdhe8K7bavhH4o1oBWjZ4xakb3YE8x4LVc2pFqynJgZqWwkdv1J0RSpWYU4EuEuP4if2XI3dnblyxVjLN0PTb1pJAMgEyJRtkI1rW581mx+AeLlzVdT0myF/ifiYNay1PHZKCVqd5sPoqfsN8AruOiPnVXty8X7k6k1hAEAQBAEByHX/1+ryZ8jVV4nvGe12P9HHz92a8tBZmX0QQWwWkwdk8c1ZYXuzxu2VbFN9bGW8lcdpG6Pqukqiux6PjE3p3/AEQFxWcKbXOJhoz6riRyDQSe5Aazaf6j2WnhTbUquB2NuNBG8vII91CDDWPT5tQgUGUmUwGNIJe+DBLb5A6vVaYjduXHi52jlL7YVDNUdR8uHmTrgPVENroX2OYdo7jsPes6c8kkznxdBV6MqfU0+3NdTJa4QfHiFaKamro8NVw86E3Ca4ls3ze/9kMCrRAJtNNuwvaD7wSWgjqdw0eIw7lxnetC9t1WqKZc1l6MAwGCeOKGPBGlaU0h01UksuFkNI4jH91qranodkP/ABy8S0Wktjx2SglanebD6Kn7DfAK7joj51V7cvF+5OpNYQBAEAQBAch1/wDX6vJnyNVXie8Z7XY/0cfP3Zry0FmbBqq1r77XAyIcMdhwPxA713YOWqPM7epO8ai8DZqNKMIwXaeeLhtCf3Qg8NnPP/hAY/Ser1ntAitQY85Xoh45PEOGzIoDRbTo6lZ6lSlRBDGuObrxmAD1jniI7FVYiWaZ7XZNHdYaPV8ShaSzCAxmnNHtqU3OjrtabpGZjG7xC3UajjK3IrNp4OFak5W+ZLgarZgDA4nwVgzxyRS19yqCMIcCDugz+yPiiVwZ2vRtrFSk17YMgQdnauSR2xd0QaR0naafmupxvgye0kx3KVY6aFOnLtM1jyp9RzjUDAQYAYSRGcknbiVpral3s6GSMl+ypaSyPHZKCVqd5sPoqfsN8AruOiPnVXty8X7k6k1hAEAQBAEByHX/ANfq8mfI1VeJ7xntdj/Rx8/dmvLQWZeaJtvQ1m1MwMHDe04H69i2UpuErnJjMMsRRcOfI6ZRexzWuaQQRIIyIVsmmro8LOEoSyyXFFw2FJhYED+HFCbMirVLrSQJIBIAzO4dpEKJOyZlTjeSTOajQ1peSeicSSZxbntGecqr3NR8bHtY7QwsIqKnoes0FaCJFOREzfZgM587JNxU6D4nhfvPRoG0fgH/ALKfD/LiO8J/HqdCHtXC/cVs1ctBya3sqMPHYdxBU/x6nQxe1sL93+jCaZ/p9a3va6i2kDtb0jRMHMAc8eYXXRjNK0jz20Z4epNSo+a0MY/+nNtAcXGgImZrDCMTOGECCt1ivNs1N1at9l6lU0TSOUVSS0ncLuRWudK+hsp1HHU2e26EbUbdqNpknAS8jHYMBngtaoyNrrI1bSWrLrI0v6t1zgIDiTMHeMuqtOIpyVmy82NXi81Na6mNXKX547JQStTvNh9FT9hvgFdx0R86q9uXi/cnUmsIAgCAIAgOQ6/+v1eTPkaqvE94z2ux/o4+fuzXloLMIDMaC0++zdWL9MmS2YIn8JyHLit9Ku4cORV47ZscR86dpG2UrRRteLCXXMwS5kXt4jrAx8F3wqxnoeZxGEq0H86Ll1ka1jgQ0NOLpl07cZOWGS2HKRUrFTD7wLLzesSQ4ubIcJMvwwc/vcgEUHkOLqLoIIMZF3WBEuwJ6SRt6/FASdLZ7hZfZdIxAfAIAaMCDlAAwKAoYLOKbntxYCZu3jiHFxho23nE4ZdmACgyg5xDWnIuMhwaRL2nzsCCXv5zOSA8steziS1t0sa5x6mIGBdjtz2HHHcgIza7Ky8SA0gEuPRk5gXpdBmejaDBMm6MSQg4EjKdmLwBTBcHYQwiC1zsZI/FeM7c9yDgDWoCoXljr8xeuOOOLMInGGETu9rEDGa41w+zAgOEVG+cIzD9hx+G1c2K7BcbEf8A5D8DSlXHrDx2SglanebD6Kn7DfAK7joj51V7cvF+5OpNYQBAEAQBAch1/wDX6vJnyNVXie8Z7XY/0cfP3Zry0FmEAQFdKq5pDmktIyIMEKVJrijCpTjUVpK6Np0VrSXno7RcAIwfdMT/AJiciN0LspYlt2keexux1GLlRu/0Zina7NDorUAHTegNF6ZmQXGZk966d9DqVP8ACxH2P0KqdosxIDa1OScAOik5f4/4juCKrB8yHg66V3B+hdspU8w8f7B4BZ5l1NO6n0foTUXNya4HkQfBFJMOnJaolUmJCLON7/fd9UIBs7dpd/7H/VLolRb0La02ihTaX1KrWtGbnVoaOZLlGZGTpzSu0a3pP+oGjaLSW1jVcMmUr5J/1YNA4z3qTXcwVTXRlvpFrKLqYa8YvqXycDEDZmuPFyski+2FRzTlV6cCzXCenPHZKCVqd5sPoqfsN8AruOiPnVXty8X7k6k1hAEAQBAEByHX/wBfq8mfI1VeJ7xntdj/AEcfP3Zry0FlcjtFdrG3nkADaVMYuTsjXVrQpRzTdkeUrQHNvYgcWlvwKlwadjGGIjKGfl+yqnUBE4gcRHwUONnYzhVUo5tPE9pVA5oc0gg4gjIo007MmFSM454vgRG2U7nSXhc/Fs3LLJK+U1PFUlT3t/l6lVCuHiRMcWkT3qJRceDMqVWNVXiSQsTbZFNntAvEsdDmmCRgWnmsrSjZmlSpVrx4O3Bk1LWCpUe5or1C6mceu6Md2OOULZJ1ElJs5KMcJUnKnGKuteBdt1krvDmiu4wbpiAQRskCVMqlXmyKWDwcpNxSuuDLCpa74L3PvATLi69EZ49i1vM3ZnVHcRg5RtZdP0QvrMug+cHZQJvTw5KFGV/AmdWm4Jvinp+zXrfqu0uL21BTZmQWzd3wZGHguyGK4Wa4lFidixzOpGWWPsZjQthZRpwwkyZJOBJyy2clz15ynLii12dhqdCl8jv1ZfucBmeC1WZ3OcVqHZLEzWp3mw+ip+w3wCu46I+dVe3LxfuTqTWEAQBAEAQHIdf/AF+ryZ8jVV4nvGe12P8ARx8/dmn2mTaKTQcGte48Zhon4qI8KcmZVm5YunFPRNlOmml7W0hEvcM8ob1jlswHepoOzcmYbSTqRjSjq2v9F1WphzC1587DDDlHFa07SujrnBSpuE3rwLSraXChVnzmXmzvIEB3bIW1Q/yK3M45YiSwtTNrG6v1KqjxSsxDTN1l0QZxgADnJCxtmqcTJyjRwVo8lbzLe3WYiz07OIl11uPCC48sPitkJXm5mjEUnHDU8OtXZf8ALMsydsdgwXNJ3ZbUk1GzYc8ASTAUJX0MpSUVdmLoVrjbRVAmXm7/AJRDWjtK6ZRu4xKijU3dOtVXNu375HuiaBbUdeEEU2A4iSZeSTG0kkpWaaVicBTlCrLMrcF6lpo2nUJdAIbWJJd+GHOntIjvWyo42V9UceEhXc5ZV8s+LfRJkzm3bK5rc3vc1o9txHyz3LC96t+hvtkwThH+zsvNl5a6Qa0Fp61JstxzAEEHgQFrg7yd+Z2V6ahCLi7Sgrrw5lNpqX3UmnBpBqOB3NAIB7XA/wClTCOXN6GNaoqkqcXo/mfkU2iXUXxgahw5HAdt0SkbZ1+jGtmeHlb++nmQ2WoelZRdnSDjO8YNYR2OKzmllclzNFCct/DDz1jf/wCMy7slyl6tTvNh9FT9hvgFdR0R86q9uXi/cnUmsIAgCAIAgOQ6/wDr9Xkz5GqrxPeM9rsf6OPn7s1V9jBqdJedN0NgGBAJOzHasFUtHKdEsKpVt7d6WKq9la8hxJBAIEGM88lEajirGVbDRqSUm3ddD19maWhsQBBEEgiMQQRjKhTadzKeHhKGS3AeSsuXLou7QcZxnGc8cUzu9x/Hp5N3bgVGg2A2BAIIGwRiMEUpXuS6MHFRtwX/AAUWiyh5BJILZggxngVMajimjCtho1WpO6a6EtOmGgACAFi227s3QgoK0RUphwLXCQcCDkUTad0TOEZxyyXAidZGlrWgQ1pBAGAwxA5TislN3bNEsNBwUFwSdya7nxWNzc4J3/ZTRphrQ0ZDJJO7uzGnSVOGRaFIoNho/DlPIie4lTmfEjcxtFW00Ka9la8guE4RmQCM4IGYw2qYzcVZGNXDwqSUpFVaztdBcJidpGeYIGYwyKhTaJqYenUazLQrfTBidhkc/wCFRmaM5U4ytdaHnQtvX4F6InbGcJmdrDdRz57cSp2Sg2rU7zYfRU/Yb4BXUdEfOqvbl4v3J1JrCAIAgCAIDG2zQNmqvNSpRY95iXEYmBA+AWuVKEndo6qeNxFOOWE2l0IfstY/01PuUbin0M/iOK/I/UfZax/pqfcm4p9B8RxX5H6j7LWP9NT7k3FPoPiOK/I/UfZaxfpqfcm4p9B8RxX5H6j7LWP9NT7k3FPoPiOK/I/UfZax/pqfcm4p9B8RxX5H6j7LWP8ATU+5NxT6D4jivyP1H2WsX6an3JuKfQfEcV+R+o+y1j/TU+5NxT6D4jivyP1H2Wsf6an3JuKfQfEcV+R+o+y1j/TU+5NxT6D4jivyP1H2Wsf6an3JuKfQfEcV+R+o+y1i/TU+5NxT6D4jivyP1H2Wsf6an3JuKfQfEcV+R+o+y1j/AE1PuTcU+g+I4r8j9R9lrF+mp9ybin0HxHFfkfqPstYv01PuTcU/tHxHFfkfqZZjQAAMABA4Qtpxttu7KkICAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAID/9k=" alt="Featured Book 1" class="hero-book img-fluid">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Slide -->
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h1 class="display-4 fw-bold mb-4">Celebrate Local Authors</h1>
+                                <p class="lead mb-4">Discover amazing works from Kerala's finest writers. Special collection available this week!</p>
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="btn btn-light btn-lg">Explore Collection</a>
+                                    <a href="#" class="btn btn-outline-light btn-lg">Meet Authors</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="data:image/jpeg;base64,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" alt="Featured Book 2" class="hero-book img-fluid">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Third Slide -->
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h1 class="display-4 fw-bold mb-4">Children's Book Festival</h1>
+                                <p class="lead mb-4">Ignite young minds with our curated collection of children's books. Buy 2 get 1 free!</p>
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="btn btn-light btn-lg">Kids Section</a>
+                                    <a href="#" class="btn btn-outline-light btn-lg">View Offers</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="/api/placeholder/350/500" alt="Featured Book 3" class="hero-book img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Categories -->
+    <div class="container mb-5">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                    <i class="fas fa-book fa-2x text-primary me-3"></i>
+                    <div>
+                        <h6 class="mb-0">New Releases</h6>
+                        <small class="text-muted">Latest arrivals</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                    <i class="fas fa-award fa-2x text-warning me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Award Winners</h6>
+                        <small class="text-muted">Best of literature</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                    <i class="fas fa-users fa-2x text-success me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Book Clubs</h6>
+                        <small class="text-muted">Join the community</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                    <i class="fas fa-percent fa-2x text-danger me-3"></i>
+                    <div>
+                        <h6 class="mb-0">Special Offers</h6>
+                        <small class="text-muted">Exclusive deals</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Featured Books -->
+    <section class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Featured Books</h2>
+            <a href="#" class="btn btn-outline-primary">View All</a>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm<div class="col-md-3 col-sm-6">
+                <div class="card book-card">
+                    <span class="discount-badge">-20%</span>
+                    <img src="/9780465013272-1.webp" alt="Book">
+                    <div class="card-body">
+                        <h5 class="card-title">രണ്ടാമൂഴം</h5>
+                        <p class="text-muted">എം.ടി. വാസുദേവൻ നായർ</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="book-price mb-0">₹280.00</p>
+                            <small class="text-decoration-line-through text-muted">₹350.00</small>
+                        </div>
+                        <button class="btn btn-primary w-100"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card">
+                    <span class="discount-badge">-15%</span>
+                    <img src="/9780465013272-1.webp" class="card-img-top" alt="Book">
+                    <div class="card-body">
+                        <h5 class="card-title">ഖസാക്കിന്റെ ഇതിഹാസം</h5>
+                        <p class="text-muted">ഒ.വി. വിജയൻ</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="book-price mb-0">₹255.00</p>
+                            <small class="text-decoration-line-through text-muted">₹300.00</small>
+                        </div>
+                        <button class="btn btn-primary w-100"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card">
+                    <img src="/9780465013272-1.webp" class="card-img-top" alt="Book">
+                    <div class="card-body">
+                        <h5 class="card-title">മയ്യഴിപ്പുഴയുടെ തീരങ്ങളിൽ</h5>
+                        <p class="text-muted">എം. മുകുന്ദൻ</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="book-price mb-0">₹195.00</p>
+                        </div>
+                        <button class="btn btn-primary w-100"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card book-card">
+                    <span class="discount-badge">New!</span>
+                    <img src="/9780465013272-1.webp" class="card-img-top" alt="Book">
+                    <div class="card-body">
+                        <h5 class="card-title">ആരാച്ചാർ</h5>
+                        <p class="text-muted">കെ.ആർ. മീര</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="book-price mb-0">₹225.00</p>
+                        </div>
+                        <button class="btn btn-primary w-100"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="deal-section">
+        <div class="container deal-content">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="/api/placeholder/400/500" alt="Deal Book" class="img-fluid rounded-3 shadow-lg">
+                </div>
+                <div class="col-md-6">
+                    <div class="deal-timer">
+                        <h2 class="display-5 mb-4">Today's Special Deal</h2>
+                        <h3 class="mb-3">മാമാങ്കം</h3>
+                        <p class="lead mb-4">സാജൻ കെ. രാഘവൻ</p>
+                        
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <h4 id="hours">24</h4>
+                                <small>Hours</small>
+                            </div>
+                            <div class="countdown-item">
+                                <h4 id="minutes">00</h4>
+                                <small>Minutes</small>
+                            </div>
+                            <div class="countdown-item">
+                                <h4 id="seconds">00</h4>
+                                <small>Seconds</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-center gap-4 my-4">
+                            <h3 class="mb-0">₹199.00</h3>
+                            <span class="text-decoration-line-through opacity-75">₹399.00</span>
+                            <span class="badge bg-danger p-2">50% OFF</span>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-light btn-lg flex-grow-1">
+                                <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                            </button>
+                            <button class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="category-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Explore Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <img src="/9780465013272-1.webp" alt="Novels">
+                    <div class="category-overlay">
+                        <h3>നോവൽ</h3>
+                        <div class="category-stats">
+                            <span><i class="fas fa-book me-2"></i>450+ Books</span>
+                            <span><i class="fas fa-user me-2"></i>120+ Authors</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="/9780465013272-1.webp" alt="Poetry">
+                    <div class="category-overlay">
+                        <h3>കവിത</h3>
+                        <div class="category-stats">
+                            <span><i class="fas fa-book me-2"></i>280+ Books</span>
+                            <span><i class="fas fa-user me-2"></i>85+ Authors</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="/9780465013272-1.webp" alt="Poetry">
+                    <div class="category-overlay">
+                        <h3>കവിത</h3>
+                        <div class="category-stats">
+                            <span><i class="fas fa-book me-2"></i>280+ Books</span>
+                            <span><i class="fas fa-user me-2"></i>85+ Authors</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="/9780465013272-1.webp" alt="Poetry">
+                    <div class="category-overlay">
+                        <h3>കവിത</h3>
+                        <div class="category-stats">
+                            <span><i class="fas fa-book me-2"></i>280+ Books</span>
+                            <span><i class="fas fa-user me-2"></i>85+ Authors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Authors -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Featured Authors</h2>
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="author-card">
+                    <img src="/9780465013272-1.webp" class="author-image" alt="Author">
+                    <h5>എം.ടി. വാസുദേവൻ നായർ</h5>
+                    <p class="text-muted">25+ Books</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="author-card">
+                    <img src="/9780465013272-1.webp" class="author-image" alt="Author">
+                    <h5>വൈക്കം മുഹമ്മദ് ബഷീർ</h5>
+                    <p class="text-muted">18+ Books</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="author-card">
+                    <img src="/9780465013272-1.webp" class="author-image" alt="Author">
+                    <h5>കെ.ആർ. മീര</h5>
+                    <p class="text-muted">12+ Books</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="author-card">
+                    <img src="/9780465013272-1.webp" class="author-image" alt="Author">
+                    <h5>പി. പത്മരാജൻ</h5>
+                    <p class="text-muted">15+ Books</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Enhanced Reading Experience</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h4>Audiobook Integration</h4>
+                        <p>Listen to your favorite books narrated by professional voice artists. Available in Malayalam and English.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <h4>Reading Progress Tracker</h4>
+                        <p>Track your reading goals, set reminders, and maintain a reading streak.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Book Clubs</h4>
+                        <p>Join virtual book clubs, discuss with fellow readers, and participate in reading challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <section class="new-release-section">
+        <div class="container">
+            <h2 class="text-center mb-5">New Releases</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="new-release-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <img src="/9780465013272-1.webp" alt="New Book" class="img-fluid rounded-3 shadow">
+                            </div>
+                            <div class="col-md-8">
+                                <span class="badge bg-danger mb-2">New Release</span>
+                                <h3>നവീന മലയാള കവിതകൾ</h3>
+                                <p class="text-white-50 mb-4">By സച്ചിദാനന്ദൻ</p>
+                                <div class="d-flex align-items-center gap-3 mb-4">
+                                    <h4 class="mb-0">₹299.00</h4>
+                                    <span class="text-decoration-line-through text-white-50">₹399.00</span>
+                                </div>
+                                <button class="btn btn-light">Pre-order Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="new-release-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <img src="/9780465013272-1.webp" alt="New Book" class="img-fluid rounded-3 shadow">
+                            </div>
+                            <div class="col-md-8">
+                                <span class="badge bg-danger mb-2">Coming Soon</span>
+                                <h3>കാലത്തിന്റെ നൊമ്പരം</h3>
+                                <p class="text-white-50 mb-4">By എം.കെ. സാനു</p>
+                                <div class="d-flex align-items-center gap-3 mb-4">
+                                    <h4 class="mb-0">₹349.00</h4>
+                                    <span class="text-decoration-line-through text-white-50">₹449.00</span>
+                                </div>
+                                <button class="btn btn-light">Notify Me</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    
     <!-- Newsletter -->
     <section class="newsletter-section">
         <div class="container text-center">
@@ -753,8 +1040,8 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+     <!-- Footer -->
+     <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -811,6 +1098,46 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled', 'shadow');
+            } else {
+                navbar.classList.remove('scrolled', 'shadow');
+            }
+        });
+
+        // Deal Countdown Timer
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            new bootstrap.Carousel(document.querySelector('#heroCarousel'), {
+                interval: 5000, // Auto-slide every 5 seconds
+                touch: true,    // Enable touch swipe on mobile
+                pause: 'hover'  // Pause on mouse hover
+            });
+        });
+
+        </script>
+        </body>
+        </html>

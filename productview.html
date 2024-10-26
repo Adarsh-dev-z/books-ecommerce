@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store - Product View</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #e74c3c;
+            --accent-color: #f1c40f;
+            --text-color: #34495e;
+            --light-bg: #ecf0f1;
+            --dark-bg: #2c3e50;
+            --success-color: #27ae60;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            padding-top: 76px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 0.5rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .search-form {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-form input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+        }
+
+        .search-form button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+        }
+
+        /* Main Container Styles */
+        .main-container {
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Product Container Styles */
+        .product-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Product Image Styles */
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .thumbnail-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            margin-top: 1rem;
+            max-width: 100%;
+        }
+
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            padding: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary-color);
+        }
+
+        /* Product Info Styles */
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* Format Selector */
+        .format-selector {
+            margin: 1.5rem 0;
+        }
+
+        .format-selector .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .format-selector .btn {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        /* Quantity Selector */
+        .quantity-selector {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .review-card {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        /* Suggested Products */
+        .suggested-products {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .product-card {
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .navbar-brand img {
+                height: 30px;
+            }
+
+            .search-form {
+                margin: 0.5rem 0;
+            }
+
+            .navbar .btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 60px;
+                padding-bottom: 80px;
+            }
+
+            .product-container {
+                padding: 0.5rem;
+            }
+
+            .product-info {
+                padding: 0.5rem;
+            }
+
+            .action-buttons {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                background: white;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+                z-index: 1020;
+                margin: 0;
+                flex-direction: row;
+            }
+
+            .action-buttons .btn {
+                flex: 1;
+                white-space: nowrap;
+                padding: 0.5rem;
+            }
+
+            .format-selector .btn-group {
+                width: 100%;
+            }
+
+            .reviews-section,
+            .suggested-products {
+                padding: 1rem;
+            }
+
+            .col-md-3 {
+                width: 50%;
+                padding: 0.5rem;
+            }
+
+            .review-card {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand span {
+                display: none;
+            }
+
+            .col-md-3 {
+                width: 100%;
+            }
+
+            .product-title {
+                font-size: 1.25rem;
+            }
+
+            .price {
+                font-size: 1.5rem;
+            }
+
+            .review-card .d-flex {
+                flex-direction: column;
+            }
+
+            .reviewer-avatar {
+                margin-bottom: 1rem;
+            }
+
+            .quantity-selector {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Loading Animation */
+        .image-loading {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-loaded {
+            opacity: 1;
+        }
+
+        /* Enhanced Delivery Info */
+        .delivery-info {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .delivery-info i {
+            width: 20px;
+            color: var(--primary-color);
+        }
+
+        /* Wishlist Button */
+        .wishlist-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1010;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/api/placeholder/40/40" alt="Logo">
+                <span>Kannur Book Club</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="search-form mx-lg-auto my-2 my-lg-0">
+                    <input type="search" class="form-control" placeholder="Search books, authors, ISBN...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="ms-auto d-flex flex-wrap gap-2">
+                    <a href="/wishlist.html" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-heart"></i>
+                        <span class="d-none d-sm-inline ms-1">Wishlist</span>
+                    </a>
+                    <a href="/cart.html" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="d-none d-sm-inline ms-1">Cart</span>
+                    </a>
+                    <a href="/login.html" class="btn btn-light btn-sm">
+                        <i class="fas fa-user"></i>
+                        <span class="d-none d-sm-inline ms-1">Login</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="product-container">
+            <div class="row g-4">
+                <!-- Product Images -->
+                <div class="col-lg-6">
+                    <div class="product-image-container">
+                        <img src="/api/placeholder/400/500" alt="Book Cover" class="main-image image-loading">
+                        <div class="thumbnail-container">
+                            <img src="/9780465013272-1.webp" alt="Thumbnail 1" class="thumbnail active">
+                            <img src="/9780465013272-1.webp" alt="Thumbnail 2" class="thumbnail">
+                            <img src="/9780465013272-1.webp" alt="Thumbnail 3" class="thumbnail">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="col-lg-6">
+                    <div class="product-info">
+                        <h1 class="product-title">The Great Adventure</h1>
+                        
+                        <div class="rating">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-2">(4.6) · 17 ratings</span>
+                        </div>
+
+                        <div class="price">
+                            $29.99
+                            <small class="text-muted d-block">Or 4 interest-free payments of $7.50</small>
+                        </div>
+
+                        <div class="format-selector">
+                            <h6 class="mb-2">Format</h6>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-primary active">Hardcover</button>
+                                <button class="btn btn-outline-primary">Paperback</button>
+                                <button class="btn btn-outline-primary">E-Book</button>
+                            </div>
+                        </div>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn" onclick="decrementQuantity()">-</button>
+                            <span id="quantity">1</span>
+                            <button class="quantity-btn" onclick="incrementQuantity()">+</button>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Add to Cart</button>
+                            <button class="btn btn-outline-primary d-none d-md-block">Add to Wishlist</button>
+                        </div>
+
+                        <div class="delivery-info">
+                            <h6 class="mb-3">Delivery Options</h6>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-truck me-2"></i>
+                                <span>Free shipping on orders over $35</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-store me-2"></i>
+                                <span>Pick up available at nearby stores</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar me-2"></i>
+                                <span>Expected delivery: Oct 30 - Nov 2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Wishlist Button -->
+        <button class="wishlist-btn d-md-none">
+            <i class="fas fa-heart"></i>
+        </button>
+
+                        <div class="product-details mt-4">
+                            <h6>About this Book</h6>
+                            <p>A captivating story of adventure and discovery that will take you on an unforgettable journey. Written by acclaimed author Jane Smith, this masterpiece combines mystery, drama, and suspense.</p>
+                            
+                            <table class="specs-table">
+                                <tr>
+                                    <td><strong>Author</strong></td>
+                                    <td>Jane Smith</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Publisher</strong></td>
+                                    <td>Literary House</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ISBN</strong></td>
+                                    <td>978-3-16-148410-0</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pages</strong></td>
+                                    <td>384</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Language</strong></td>
+                                    <td>English</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Reviews Section -->
+     <div class="reviews-section">
+        <h3 class="mb-4">Customer Reviews</h3>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="rating-breakdown">
+                    <h4 class="mb-3">Rating Breakdown</h4>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-2">5★</span>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-primary" style="width: 75%"></div>
+                        </div>
+                        <span class="ms-2">75%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-2">4★</span>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-primary" style="width: 15%"></div>
+                        </div>
+                        <span class="ms-2">15%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-2">3★</span>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-primary" style="width: 5%"></div>
+                        </div>
+                        <span class="ms-2">5%</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-2">2★</span>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-primary" style="width: 3%"></div>
+                        </div>
+                        <span class="ms-2">3%</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">1★</span>
+                        <div class="progress flex-grow-1">
+                            <div class="progress-bar bg-primary" style="width: 2%"></div>
+                        </div>
+                        <span class="ms-2">2%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <button class="btn-write-review mb-4">
+                    <i class="fas fa-pen me-2"></i>Write a Review
+                </button>
+
+                <div class="review-card">
+                    <div class="d-flex">
+                        <img src="/api/placeholder/50/50" alt="Reviewer" class="reviewer-avatar">
+                        <div>
+                            <h6 class="mb-1">John Doe <span class="verified-badge">Verified Purchase</span></h6>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">Reviewed on October 15, 2024</span>
+                            <p class="mt-2">Absolutely loved this book! The character development was outstanding and the plot kept me engaged throughout. Highly recommend for anyone who enjoys adventure novels.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="d-flex">
+                        <img src="/api/placeholder/50/50" alt="Reviewer" class="reviewer-avatar">
+                        <div>
+                            <h6 class="mb-1">Sarah Smith <span class="verified-badge">Verified Purchase</span></h6>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="review-date">Reviewed on October 12, 2024</span>
+                            <p class="mt-2">Great read overall, though the ending felt a bit rushed. The author's descriptive writing style really brings the scenes to life.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggested Products Section -->
+    <div class="suggested-products">
+        <h3 class="mb-4">You May Also Like</h3>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="product-card">
+                    <img src="/9780465013272-1.webp" alt="Book 1">
+                    <div class="product-card-body">
+                        <div class="product-card-title">The Lost City</div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-1">(4.0)</span>
+                        </div>
+                        <div class="product-card-price">$24.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="product-card">
+                    <img src="/9780465013272-1.webp" alt="Book 2">
+                    <div class="product-card-body">
+                        <div class="product-card-title">Mystery of the Ages</div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1">(4.5)</span>
+                        </div>
+                        <div class="product-card-price">$29.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="product-card">
+                    <img src="/9780465013272-1.webp" alt="Book 3">
+                    <div class="product-card-body">
+                        <div class="product-card-title">The Hidden Path</div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="ms-1">(5.0)</span>
+                        </div>
+                        <div class="product-card-price">$19.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="product-card">
+                    <img src="/9780465013272-1.webp" alt="Book 4">
+                    <div class="product-card-body">
+                        <div class="product-card-title">Ancient Secrets</div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="ms-1">(4.0)</span>
+                        </div>
+                        <div class="product-card-price">$22.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Keeping existing scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Enhanced quantity handler
+    let quantity = 1;
+    const quantityDisplay = document.getElementById('quantity');
+    
+    function incrementQuantity() {
+        quantity = Math.min(quantity + 1, 99);
+        updateQuantity();
+    }
+    
+    function decrementQuantity() {
+        quantity = Math.max(quantity - 1, 1);
+        updateQuantity();
+    }
+    
+    function updateQuantity() {
+        quantityDisplay.textContent = quantity;
+    }
+
+    // Enhanced thumbnail handler
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', function() {
+            document.querySelectorAll('.thumbnail').forEach(t => {
+                t.classList.remove('active');
+                t.style.opacity = '0.6';
+            });
+            this.classList.add('active');
+            this.style.opacity = '1';
+            
+            const mainImage = document.querySelector('.main-image');
+            mainImage.style.opacity = '0';
+            mainImage.src = this.src.replace('80/80', '400/500');
+            setTimeout(() => {
+                mainImage.style.opacity = '1';
+            }, 200);
+        });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Add smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
