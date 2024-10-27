@@ -21,99 +21,133 @@
             color: var(--text-color);
         }
 
-        /* Header Styles */
-        .navbar {
-            background-color: var(--primary-color);
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar-brand {
-        display: flex;
-        align-items: center;
+       /* Navbar Styles */
+.navbar {
+    background-color: var(--primary-color);
+    padding: clamp(0.5rem, 1vw, 1rem) 0;
+    transition: var(--transition);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar.scrolled {
+    background-color: rgba(26, 35, 126, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+/* Brand Styles */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-right: 1rem;
+}
+
+.navbar-brand img {
+    height: clamp(35px, 5vw, 45px);
+    width: auto;
+    margin-right: clamp(5px, 1vw, 10px);
+    transition: var(--transition);
+}
+
+/* Collapse Button */
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Search Form */
+.search-form {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin: 0.5rem auto;
+}
+
+.search-form input {
+    width: 100%;
+    border-radius: 25px;
+    padding: 0.75rem 2.5rem 0.75rem 1.5rem;
+    border: none;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.search-form button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+/* Button Group */
+.btn {
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn i {
+    font-size: 0.9em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        padding: 1rem 0;
     }
-        .navbar.scrolled {
-            background-color: rgba(26, 35, 126, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .navbar-brand img {
-            height: 45px;
-            margin-right: 10px;
-        }
-
-        .search-form {
-            position: relative;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .search-form input {
-        border-radius: 25px;
-        padding: 0.75rem 2.5rem 0.75rem 1.5rem;
-        border: none;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        width: 100%;
+    
+    .search-form {
+        margin: 1rem 0;
     }
-
-        .search-form input:focus {
-            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
-        }
-
-        .search-form button {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: none;
-            color: var(--primary-color);
-        }
-
-        .nav-buttons {
+    
+    .ms-auto {
         display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+    
+    .btn {
         justify-content: center;
     }
+}
 
-    @media (max-width: 991px) {
-        .navbar-collapse {
-            background-color: var(--primary-color);
-            padding: 1rem;
-            border-radius: 0 0 10px 10px;
-            margin: 0 -1rem;
-        }
-
-        .nav-buttons {
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .nav-buttons .btn {
-            width: 100%;
-            text-align: left;
-        }
-
-        .search-form {
-            margin: 1rem 0;
-        }
+@media (min-width: 992px) {
+    .navbar-collapse {
+        display: flex;
+        align-items: center;
     }
-
-    @media (min-width: 992px) {
-        .nav-buttons {
-            margin-left: 1rem;
-        }
+    
+    .search-form {
+        margin: 0 2rem;
+        min-width: 300px;
     }
+}
 
-    /* Optional: Hide button text on very small screens */
-    @media (max-width: 575px) {
-        .nav-buttons .btn i {
-            margin-right: 0.5rem;
-        }
-    }
+/* Animation for collapse */
+.navbar-collapse {
+    transition: height 0.35s ease;
+}
 
+/* Optional: Hide scrollbar when navbar is expanded */
+body.navbar-expanded {
+    overflow: hidden;
+}
     .hero-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, #303f9f 100%);
     color: white;
